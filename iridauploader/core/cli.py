@@ -234,6 +234,12 @@ def main():
         print("ERROR! Specified directory is not readable: {}".format(args.directory))
         return 1
 
+    # Verify directory is writable before upload
+    if not os.access(args.directory, os.W_OK):  # Cannot access upload directory
+        os.chmod(args.directory,0o777)
+        print("WARNING! Specified directory is not readable: {}".format(args.directory))
+
+
     # Verify force and continue are not both active
     if args.force and args.continue_partial:
         print("ERROR! --force and --continue_partial are mutually exclusive. "
